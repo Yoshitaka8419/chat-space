@@ -4,14 +4,14 @@
 
 |Column|Type|Options|
 |------|----|-------|
-|group_name|integer|null: false, foreign_key: true|
-|group_menber|integer|null: false, foreign_key: true|
+|name|string|null: false, foreign_key: true|
+|user_id|integer|null: false, foreign_key: true|
 
 
 ### Association
 - has_many :members
-- has_many :users
 - has_many :commens
+- has_many :users, through: :members
 
 ----------------------------------------------------
 
@@ -32,14 +32,14 @@
 |Column|Type|Options|
 |------|----|-------|
 |user_id|integer|null: false, foreign_key: true|
-|email|integer|null: false, foreign_key: true|
-|password|integer|null: false, foreign_key: true|
-|nickname|integer|null: false, foreign_key: true|
+|email|string|null: false, foreign_key: true|
+|password|string|null: false, foreign_key: true|
+|nickname|string|null: false, foreign_key: true|
 
 ### Association
 - has_many :comments
 - has_many :members
-- has_many :groups
+- has_many :groups,through: :members
 
 -----------------------------------------------------
 
@@ -52,6 +52,7 @@
 
 ### Association
 -belongs_to :user
+-belongs_to :group
 
 
 
