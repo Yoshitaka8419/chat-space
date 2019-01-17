@@ -5,55 +5,21 @@
   .chat
     .header
       .left-header
-
-
--# 入力が反映される様に変更
         .left-header__title
-          グループ名
-
-
+          = @group.name
         %ul.left-header__members
           Member：
           %li.member
-            メンバー名
-          %li.member
-            メンバー名
-          %li.member
-            メンバー名
-
+          - @group.users.each do |user|
+            = user.name
 
 
       .right-header
         .right-header__button
-          = link_to 'Edit', edit_group_path
+          = link_to 'Edit', edit_group_path(@group)
+
     .messages
-      .message
-        .upper-message
-          .upper-message__user-name
-            メンバー
-          .upper-message__date
-            2017/04/04
-        .lower-meesage
-          .lower-message__content
-            メッセージ
-      .message
-        .upper-message
-          .upper-message__user-name
-            メンバー
-          .upper-message__date
-            2017/04/04
-        .lower-meesage
-          .lower-message__content
-            メッセージ
-      .message
-        .upper-message
-          .upper-message__user-name
-            メンバー
-          .upper-message__date
-            2017/04/04
-        .lower-meesage
-          .lower-message__content
-            メッセージ
+      = render @messages
 
     .form
       = form_for [@group, @message] do |f|
@@ -64,5 +30,4 @@
             = f.file_field :image, class: 'hidden'
         = f.submit 'Send', class: 'form__submit'
 
-    .messages
-      = render @messages
+
