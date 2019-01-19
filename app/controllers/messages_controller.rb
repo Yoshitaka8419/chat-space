@@ -16,7 +16,8 @@ before_action :set_group
     else
       @message = @group.message.includes(:user)
       flash.now[:alert] = 'メッセージを入力してください'
-      render :index
+      @messages = @group.messages.includes(:user)
+      render :index,locals: { messages: @messages}
     end
   end
 

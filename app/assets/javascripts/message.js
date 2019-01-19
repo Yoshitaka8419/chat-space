@@ -24,7 +24,6 @@ function scroll() {
 }
 
   $('#new_message').on('submit', function(e) {
-    // console.log("あああ");
     e.preventDefault();
     var formData = new FormData(this);
     var url = $(this).attr('action');
@@ -38,8 +37,8 @@ function scroll() {
       contentType: false
     })
     .done(function(data){
-      // console.log("成功");
      var html = buildHTML(data);
+     document.$('form').reset()
       $('.messages').append(html);
       $('.form__message').val('');
       $('.form__submit').prop('disabled', false);
