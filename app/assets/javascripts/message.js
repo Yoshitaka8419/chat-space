@@ -19,7 +19,7 @@ var html = `<div class="message">
   return html;
 }
 
-function scroll() {
+function scrollToNewestMessage() {
     $('.chat .messages').animate({scrollTop: $('.chat .messages')[0].scrollHeight},'fast')
 }
 
@@ -36,13 +36,13 @@ function scroll() {
       processData: false,
       contentType: false
     })
-    .done(function(data){
-     var html = buildHTML(data);
-     document.$('form').reset()
+    .done(function(new_message){
+     var html = buildHTML(new_message);
+     $('#new_message')[0].reset();
       $('.messages').append(html);
       $('.form__message').val('');
       $('.form__submit').prop('disabled', false);
-      scroll()
+      scrollToNewestMessage()
     })
     .fail(function(){
         alert('error')
