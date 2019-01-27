@@ -17,7 +17,7 @@ $(function(){
     var html = `<div class='chat-group-user clearfix js-chat-member'>
                 <input name='group[user_ids][]' type='hidden' value="${user_id}">
                 <p class='chat-group-user__name'>${name}</p>
-                <a class='user_search_remove chat-group-user__btn chat-group-user__btn--remove js-remove-btn'>削除</a>
+                <a class='user_search_remove chat-group-user__btn chat-group-user__btn--remove js-remove-btn' id='user-search-remove','data-user-id'="${user_id}">削除</a>
                 </div>`
 
     member_list.append(html);
@@ -55,15 +55,15 @@ $(function(){
     });
   });
 
-$(function() {
+
     $(document).on("click", '.user_search_add', function() {
       var name = $(this).attr("data-user-name");
       var user_id = $(this).attr("data-user-id");
       user_ids.push(user_id)
       $(this).parent().remove();
       appendMembers(name, user_id);
-    });
-    $(document).on("click", '.user_search_remove', function() {
+
+    $(document).on("click", '#user-search-remove', function() {
       $(this).parent().remove();
     });
   });
