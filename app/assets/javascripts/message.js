@@ -57,7 +57,6 @@ function scrollToNewestMessage() {
 var interval = setInterval(function() {
       if (location.href.match(/\/groups\/\d+\/messages/)){
         var message_id = $('.message').last().data('id');
-        console.log(message_id)
         $.ajax({
           url: location.href,
           type: "GET",
@@ -65,13 +64,13 @@ var interval = setInterval(function() {
           dataType: "json"
         })
 
-      .done(function(data){
+        .done(function(data){
         data.forEach(function(message){
-        var html = buildHTML(message);
-        $('.messages').append(html);
-        scrollToNewestMessage()
+          var html = buildHTML(message);
+          $('.messages').append(html);
+          scrollToNewestMessage()
+          })
         })
-      })
     .fail(function(data){
         alert('error')
         $('.form__submit').prop('disabled', false);
