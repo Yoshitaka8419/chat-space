@@ -1,7 +1,7 @@
 $(function() {
   function buildHTML(message){
 
-var html = `<div class="message">
+var html = `<div class="message" data-id=${message.id}>
       <div class="upper-message">
         <div class="upper-message__user-name">
           ${ message.user_name }
@@ -48,5 +48,36 @@ function scrollToNewestMessage() {
         alert('error')
         $('.form__submit').prop('disabled', false);
     })
-  })
-})
+  });
+
+function scrollToNewestMessage() {
+    $('.chat .messages').animate({scrollTop: $('.chat .messages')[0].scrollHeight},'fast')
+}
+
+var interval = setInterval(function() {
+      if (location.href.match(/\/groups\/\d+\/messages/)){
+        var message_id = $('.message').last().data('id');
+        console.log(message_id)
+        $.ajax({
+          url: location.href,
+          type: "GET",
+          data: {id: message_id},
+          dataType: "json"
+        })
+
+      .done(function(data){
+        data.forEach(function(message){
+        var html = buildHTML(message);
+        $('.messages').append(html);
+        scrollToNewestMessage()
+        })
+      })
+    .fail(function(data){
+        alert('error')
+        $('.form__submit').prop('disabled', false);
+    });
+      } else {
+          clearInterval(interval);
+        }
+    } , 5000 );
+});
