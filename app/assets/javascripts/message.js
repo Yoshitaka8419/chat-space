@@ -1,27 +1,27 @@
 $(function() {
   function buildHTML(message){
 
-var html = `<div class="message" data-id=${message.id}>
-      <div class="upper-message">
-        <div class="upper-message__user-name">
-          ${ message.user_name }
+  var html = `<div class="message" data-id=${message.id}>
+        <div class="upper-message">
+          <div class="upper-message__user-name">
+            ${ message.user_name }
+          </div>
+          <div class="upper-message__date">
+            ${ message.time }
+          </div>
         </div>
-        <div class="upper-message__date">
-          ${ message.time }
-        </div>
+        <div class="lower-message">
+        <p class="lower-message__content">
+          ${ message.content }
+        </p>
       </div>
-      <div class="lower-message">
-      <p class="lower-message__content">
-        ${ message.content }
-      </p>
-    </div>
-  </div>`;
-  return html;
-}
+    </div>`;
+    return html;
+  }
 
-function scrollToNewestMessage() {
-    $('.chat .messages').animate({scrollTop: $('.chat .messages')[0].scrollHeight},'fast')
-}
+  function scrollToNewestMessage() {
+      $('.chat .messages').animate({scrollTop: $('.chat .messages')[0].scrollHeight},'fast')
+  }
 
   $('#new_message').on('submit', function(e) {
     e.preventDefault();
@@ -50,33 +50,32 @@ function scrollToNewestMessage() {
     })
   });
 
-function scrollToNewestMessage() {
-    $('.chat .messages').animate({scrollTop: $('.chat .messages')[0].scrollHeight},'fast')
-}
+  function scrollToNewestMessage() {
+      $('.chat .messages').animate({scrollTop: $('.chat .messages')[0].scrollHeight},'fast')
+  }
 
-var interval = setInterval(function() {
-      if (location.href.match(/\/groups\/\d+\/messages/)){
-        var message_id = $('.message').last().data('id');
-        $.ajax({
-          url: location.href,
-          type: "GET",
-          data: {id: message_id},
-          dataType: "json"
-        })
-
-        .done(function(data){
+  var interval = setInterval(function() {
+    if (location.href.match(/\/groups\/\d+\/messages/)){
+      var message_id = $('.message').last().data('id');
+      $.ajax({
+        url: location.href,
+        type: "GET",
+        data: {id: message_id},
+        dataType: "json"
+      })
+      .done(function(data){
         data.forEach(function(message){
           var html = buildHTML(message);
           $('.messages').append(html);
           scrollToNewestMessage()
-          })
         })
-    .fail(function(data){
+      })
+      .fail(function(data){
         alert('error')
         $('.form__submit').prop('disabled', false);
-    });
-      } else {
-          clearInterval(interval);
-        }
-    } , 5000 );
+      });
+    } else {
+      clearInterval(interval);
+    }
+  }, 5000 );
 });
